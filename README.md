@@ -5,11 +5,8 @@ The `app` folder contains the actual flutter app. This app allows the user to cr
 
 The `server` folder contains a very simple TCP server that accepts incoming connections. It shows incoming messages from the client and sends messages written in the terminal to the client.
 
-<img src="https://github.com/JulianAssmann/flutter_tcp_example/screenshots/connection_details_page.png" width="200">
-<img src="https://github.com/JulianAssmann/flutter_tcp_example/screenshots/chat_page.png" width="200">
-
-<!-- ![Screesnhot of the connection details page for entering server information.](screenshots/connection_details_page.png =250x "Connection details page")
-![Screenshot of the chat page after connecting to the server.](screenshots/chat_page.png "Chat page") -->
+![Screesnhot of the connection details page for entering server information.](screenshots/connection_details_page.png "Connection details page")
+![Screenshot of the chat page after connecting to the server.](screenshots/chat_page.png "Chat page")
 
 ## Requirements
 You need to have the following tools installed:
