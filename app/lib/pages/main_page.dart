@@ -137,9 +137,12 @@ class _MainPageState extends State<MainPage> {
                       itemCount: tcpState.messages.length,
                       itemBuilder: (context, idx) {
                         Message m = tcpState.messages[idx];
-                        return Bubble(
-                          child: Text(m.message),
-                          alignment: m.sender == Sender.Client ? Alignment.centerRight : Alignment.centerLeft,
+                        return Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Bubble(
+                            child: Text(m.message),
+                            alignment: m.sender == Sender.Client ? Alignment.centerRight : Alignment.centerLeft,
+                          ),
                         );
                       }
                     ),
