@@ -1,5 +1,5 @@
 # Flutter TCP Demo
-This app demonstrantes how to use TCP sockets in a flutter app.
+This app demonstrantes how to use TCP sockets in a flutter app that 'chats' with a TCP server.
 
 The `app` folder contains the actual flutter app. This app allows the user to create a TCP connection to a TCP server identified by a hostname and a port the user can enter. A chat-like UI allows to receive messages from and send messages to the server.
 
