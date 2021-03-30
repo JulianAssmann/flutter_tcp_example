@@ -19,6 +19,7 @@ Future<void> startServer() async {
       socket.writeln("How are you?");
       socket.listen(
         (Uint8List data) {
+          if (data.length > 0 && data.first == 10) return;
           final msg = data.toString();
           print('Data from client: $msg');
           socket.add(utf8.encode("Echo: "));
