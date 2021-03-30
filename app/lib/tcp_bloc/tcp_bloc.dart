@@ -61,10 +61,14 @@ class TcpBloc extends Bloc<TcpEvent, TcpState> {
   }
 
   Stream<TcpState> _mapDisconnectToState() async* {
-    yield state.copywith(connectionState: SocketConnectionState.Disconnecting);
-    _socketConnectionTask?.cancel();
-    await _socketStreamSub?.cancel();
-    await _socket?.close();
+    try {
+      yield state.copywith(connectionState: SocketConnectionState.Disconnecting);
+      _socketConnectionTask?.cancel();
+      await _socketStreamSub?.cancel();
+      await _socket?.close();
+    } catch (ex) {
+      print(ex);
+    }
     yield state.copywith(connectionState: SocketConnectionState.None, messages: []);
   }
 
