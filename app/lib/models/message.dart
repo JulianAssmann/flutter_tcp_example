@@ -11,8 +11,8 @@ class Message {
   final Sender sender;
 
   Message({
-    @required this.timestamp, 
-    @required this.message,
-    @required this.sender
+    required this.timestamp, 
+    required this.message,
+    required this.sender
   });
 }

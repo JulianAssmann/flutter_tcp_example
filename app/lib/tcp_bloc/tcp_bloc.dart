@@ -10,12 +10,11 @@ part 'tcp_event.dart';
 part 'tcp_state.dart';
 
 class TcpBloc extends Bloc<TcpEvent, TcpState> {
-  Socket _socket;
-  StreamSubscription _socketStreamSub;
-  ConnectionTask<Socket> _socketConnectionTask;
+  Socket? _socket;
+  StreamSubscription? _socketStreamSub;
+  ConnectionTask<Socket>? _socketConnectionTask;
 
-  @override
-  TcpState get initialState => TcpState.initial();
+  TcpBloc() : super(TcpState.initial());
 
   @override
   Stream<TcpState> mapEventToState(
@@ -38,9 +37,9 @@ class TcpBloc extends Bloc<TcpEvent, TcpState> {
     yield state.copywith(connectionState: SocketConnectionState.Connecting);
     try {
       _socketConnectionTask = await Socket.startConnect(event.host, event.port);
-      _socket = await _socketConnectionTask.socket;
+      _socket = await _socketConnectionTask!.socket;
 
-      _socketStreamSub = _socket.asBroadcastStream().listen((event) {
+      _socketStreamSub = _socket!.asBroadcastStream().listen((event) {
         this.add(
           MessageReceived(
             message: Message(
@@ -51,7 +50,7 @@ class TcpBloc extends Bloc<TcpEvent, TcpState> {
           )
         );
       });
-      _socket.handleError(() {
+      _socket!.handleError(() {
         this.add(ErrorOccured());
       });
 
@@ -82,7 +81,7 @@ class TcpBloc extends Bloc<TcpEvent, TcpState> {
         timestamp: DateTime.now(),
         sender: Sender.Client,
       ));
-      _socket.writeln(event.message);
+      _socket!.writeln(event.message);
     }
   }
 

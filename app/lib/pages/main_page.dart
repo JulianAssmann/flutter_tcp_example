@@ -1,23 +1,23 @@
 import 'package:bubble/bubble.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_tcp_example/models/message.dart';
-import 'package:flutter_tcp_example/pages/about_page.dart';
-import 'package:flutter_tcp_example/tcp_bloc/tcp_bloc.dart';
-import 'package:flutter_tcp_example/utils/validators.dart';
+import '../models/message.dart';
+import '../utils/validators.dart';
+import '../tcp_bloc/tcp_bloc.dart';
+import 'about_page.dart';
 
 class MainPage extends StatefulWidget {
-  const MainPage({Key key}) : super(key: key);
+  const MainPage({Key? key}) : super(key: key);
 
   @override
   _MainPageState createState() => _MainPageState();
 }
 
 class _MainPageState extends State<MainPage> {
-  TcpBloc _tcpBloc;
-  TextEditingController _hostEditingController;
-  TextEditingController _portEditingController;
-  TextEditingController _chatTextEditingController;
+  TcpBloc? _tcpBloc;
+  TextEditingController? _hostEditingController;
+  TextEditingController? _portEditingController;
+  TextEditingController? _chatTextEditingController;
 
   @override
   void initState() {
@@ -28,7 +28,7 @@ class _MainPageState extends State<MainPage> {
     _portEditingController = new TextEditingController(text: '8000');
     _chatTextEditingController = new TextEditingController(text: '');
 
-    _chatTextEditingController.addListener(() {
+    _chatTextEditingController!.addListener(() {
       setState(() {
         
       });
@@ -57,10 +57,10 @@ class _MainPageState extends State<MainPage> {
         bloc: _tcpBloc,
         listener: (BuildContext context, TcpState tcpState) { 
           if (tcpState.connectionState == SocketConnectionState.Connected) {
-            Scaffold.of(context)
+            ScaffoldMessenger.of(context)
               ..hideCurrentSnackBar();
           } else if (tcpState.connectionState == SocketConnectionState.Failed) {
-            Scaffold.of(context)
+            ScaffoldMessenger.of(context)
               ..hideCurrentSnackBar()
               ..showSnackBar(
                 SnackBar(
@@ -81,7 +81,7 @@ class _MainPageState extends State<MainPage> {
                 children: [
                   TextFormField(
                     controller: _hostEditingController,
-                    autovalidate: true,
+                    autovalidateMode : AutovalidateMode.always,
                     validator: (str) => isValidHost(str) ? null : 'Invalid hostname',
                     decoration: InputDecoration(
                       helperText: 'The ip address or hostname of the TCP server',
@@ -90,21 +90,21 @@ class _MainPageState extends State<MainPage> {
                   ),
                   TextFormField(
                     controller: _portEditingController,
-                    autovalidate: true,
+                    autovalidateMode : AutovalidateMode.always,
                     validator: (str) => isValidPort(str) ? null : 'Invalid port',
                     decoration: InputDecoration(
                       helperText: 'The port the TCP server is listening on',
                       hintText: 'Enter the port here, e. g. 8000',
                     ),
                   ),
-                  RaisedButton(
+                  ElevatedButton(
                     child: Text('Connect'),
-                    onPressed: isValidHost(_hostEditingController.text) && isValidPort(_portEditingController.text)
+                    onPressed: isValidHost(_hostEditingController!.text) && isValidPort(_portEditingController!.text)
                       ? () {
-                        _tcpBloc.add(
+                        _tcpBloc!.add(
                           Connect(
-                            host: _hostEditingController.text, 
-                            port: int.parse(_portEditingController.text)
+                            host: _hostEditingController!.text, 
+                            port: int.parse(_portEditingController!.text)
                           )
                         );
                       }
@@ -119,10 +119,10 @@ class _MainPageState extends State<MainPage> {
                 children: <Widget>[
                   CircularProgressIndicator(),
                   Text('Connecting...'),
-                  RaisedButton(
+                  ElevatedButton(
                     child: Text('Abort'),
                     onPressed: () {
-                      _tcpBloc.add(Disconnect());
+                      _tcpBloc!.add(Disconnect());
                     },
                   )
                 ],
@@ -159,20 +159,20 @@ class _MainPageState extends State<MainPage> {
                       ),
                       IconButton(
                         icon: Icon(Icons.send),
-                        onPressed: _chatTextEditingController.text.isEmpty
+                        onPressed: _chatTextEditingController!.text.isEmpty
                           ? null
                           : () {
-                            _tcpBloc.add(SendMessage(message: _chatTextEditingController.text));
-                            _chatTextEditingController.text = '';
+                            _tcpBloc!.add(SendMessage(message: _chatTextEditingController!.text));
+                            _chatTextEditingController!.text = '';
                           },
                       )
                     ],
                   ),
                 ),
-                RaisedButton(
+                ElevatedButton(
                   child: Text('Disconnect'),
                   onPressed: () {
-                    _tcpBloc.add(Disconnect());
+                    _tcpBloc!.add(Disconnect());
                   },
                 ),                
               ],

@@ -14,8 +14,8 @@ class TcpState {
   final List<Message> messages;
 
   TcpState({
-    @required this.connectionState,
-    @required this.messages,
+    required this.connectionState,
+    required this.messages,
   });
 
   factory TcpState.initial() {
@@ -26,8 +26,8 @@ class TcpState {
   }
 
   TcpState copywith({
-    SocketConnectionState connectionState,
-    List<Message> messages,
+    SocketConnectionState? connectionState,
+    List<Message>? messages,
   }) {
     return TcpState(
       connectionState: connectionState ?? this.connectionState,
@@ -35,7 +35,7 @@ class TcpState {
     );
   }
 
-  TcpState copyWithNewMessage({@required Message message}) {
+  TcpState copyWithNewMessage({required Message message}) {
     return TcpState(
       connectionState: this.connectionState,
       messages: List.from(this.messages)..add(message),
