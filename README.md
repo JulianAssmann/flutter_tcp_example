@@ -18,7 +18,7 @@ You need to have the [Flutter](https://flutter.dev/docs/get-started/install) ins
 To start the server, go into the `server` folder and run
 
 ```bash
-dart server.js
+dart server.dart
 ```
 
 To start the app, go into the `app` folder and run
